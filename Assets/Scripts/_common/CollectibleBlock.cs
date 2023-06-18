@@ -13,15 +13,13 @@ public class CollectibleBlock : MonoBehaviour {
 
 	public bool isPowerupBlock;
 	public GameObject objectToSpawn;
-	public GameObject bigMushroom;
-	public GameObject fireFlower;
+	public GameObject icon;
 	public int timesToSpawn = 1;
 	public Vector3 spawnPositionOffset;
 
 	private float WaitBetweenBounce = .25f;
 	private bool isActive;
 	private float time1, time2;
-
 	public List<GameObject> enemiesOnTop = new List<GameObject> ();
 
 	// Use this for initialization
@@ -47,11 +45,10 @@ public class CollectibleBlock : MonoBehaviour {
 
 				if (timesToSpawn > 0) {
 					if (isPowerupBlock) { // spawn mushroom or fireflower depending on Mario's size
-						if (t_LevelManager.marioSize == 0) {
-							objectToSpawn = bigMushroom;
-						} else {
-							objectToSpawn = fireFlower;
-						}
+						objectToSpawn = icon;
+						
+						GameObject.Find("Level Starter").transform.Find("Canvas").transform.Find("descriptionContainer").gameObject.SetActive(true);
+						StartCoroutine (t_LevelManager.PauseGameCo ());
 					}
 					Instantiate (objectToSpawn, transform.position + spawnPositionOffset, Quaternion.identity);
 					timesToSpawn--;

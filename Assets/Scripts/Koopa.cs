@@ -22,11 +22,11 @@ public class Koopa : Enemy {
 
 	IEnumerator SpawnKoopaShellCo() {
 		StopInteraction ();
-		Debug.Log (this.name + " SpawnKoopaShellCo: stopped interaction");
+		// Debug.Log (this.name + " SpawnKoopaShellCo: stopped interaction");
 		gameObject.GetComponent<SpriteRenderer> ().enabled = false;
 		yield return new WaitForSecondsRealtime(.05f); // prevent immediate damage by shell
 		Instantiate (KoopaShell, transform.position, Quaternion.identity);
-		Debug.Log (this.name + " SpawnKoopaShellCo: koopa shell spawned");
+		// Debug.Log (this.name + " SpawnKoopaShellCo: koopa shell spawned");
 		Destroy (gameObject);
 		isBeingStomped = false;
 	}

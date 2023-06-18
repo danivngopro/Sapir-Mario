@@ -28,7 +28,7 @@ public class TimeUpScreen : MonoBehaviour {
 		CoinTextHUD.text = "x" + t_GameStateManager.coins.ToString ("D2");
 
 		StartCoroutine (LoadSceneDelayCo ("Level Start Screen", loadScreenDelay));
-		Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
+		// Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
 	}
 
 	IEnumerator LoadSceneDelayCo(string sceneName, float delay = 0) {

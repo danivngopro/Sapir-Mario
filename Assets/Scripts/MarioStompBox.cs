@@ -18,10 +18,10 @@ public class MarioStompBox : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other) {
 		if (other.gameObject.tag.Contains("Enemy") && other.gameObject.tag != "Enemy/Piranha"
 			&& other.gameObject.tag != "Enemy/Bowser") {
-			Debug.Log (this.name + " OnTriggerEnter2D: recognizes " + other.gameObject.name);
+			// Debug.Log (this.name + " OnTriggerEnter2D: recognizes " + other.gameObject.name);
 			Enemy enemy = other.gameObject.GetComponent<Enemy> ();
 			t_LevelManager.MarioStompEnemy (enemy);
-			Debug.Log (this.name + " OnTriggerEnter2D: finishes calling stomp method on " + other.gameObject.name);
+			// Debug.Log (this.name + " OnTriggerEnter2D: finishes calling stomp method on " + other.gameObject.name);
 		}
 	}
 }

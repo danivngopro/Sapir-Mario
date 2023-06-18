@@ -20,7 +20,7 @@ public class Goomba : Enemy {
 	public override void StompedByMario() {
 		isBeingStomped = true;
 		StopInteraction ();
-		Debug.Log (this.name + " StompedByMario: stopped interaction");
+		// Debug.Log (this.name + " StompedByMario: stopped interaction");
 		m_Animator.SetTrigger ("stomped");
 		Destroy (gameObject, stompedDuration);
 		isBeingStomped = false;

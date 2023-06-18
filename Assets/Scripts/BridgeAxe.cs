@@ -48,6 +48,7 @@ public class BridgeAxe : MonoBehaviour {
 			rgbd.gravityScale = bridgePieceGravity;
 			t_LevelManager.soundSource.PlayOneShot (t_LevelManager.breakBlockSound);
 			yield return new WaitForSeconds (waitBetweenCollapse);
+			mario.revive();
 		}
 		t_LevelManager.MarioCompleteCastle ();
 		Destroy (gameObject);

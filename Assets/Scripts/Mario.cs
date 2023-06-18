@@ -62,7 +62,6 @@ public class Mario : MonoBehaviour {
 
 	public bool inputFreezed;
 
-
 	// Use this for initialization
 	void Start () {
 		t_LevelManager = FindObjectOfType<LevelManager>();
@@ -265,6 +264,12 @@ public class Mario : MonoBehaviour {
 			
 	}
 
+	public void revive()
+	{
+		Vector3 currentPosition = transform.position;
+		Vector3 newPosition = new Vector3(currentPosition.x - 1f, currentPosition.y, currentPosition.z);
+		transform.position = newPosition;
+	}
 
 	/****************** Automatic movement sequences */
 	void Update() {
@@ -322,7 +327,7 @@ public class Mario : MonoBehaviour {
 		isClimbingFlagPole = true;
 		m_Animator.SetBool ("climbFlagPole", true);
 		m_Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
-		Debug.Log (this.name + ": Mario starts climbing flag pole");
+		// Debug.Log (this.name + ": Mario starts climbing flag pole");
 	}
 
 
@@ -331,14 +336,14 @@ public class Mario : MonoBehaviour {
 		m_Animator.SetBool ("climbFlagPole", false);
 		AutomaticWalk(castleWalkSpeedX);
 		m_Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-		Debug.Log (this.name + ": Mario jumps off pole and walks to castle");
+		// Debug.Log (this.name + ": Mario jumps off pole and walks to castle");
 	}
 
 
 	/****************** Automatic movement (e.g. walk to castle sequence) */
 	public void UnfreezeUserInput() {
 		inputFreezed = false;
-		Debug.Log (this.name + " UnfreezeUserInput called");
+		// Debug.Log (this.name + " UnfreezeUserInput called");
 	}
 
 	public void FreezeUserInput() {
@@ -361,7 +366,7 @@ public class Mario : MonoBehaviour {
 		isShooting = false;
 
 		gameObject.GetComponent<Rigidbody2D>().velocity = Vector3.zero; // stop all momentum
-		Debug.Log (this.name + " FreezeUserInput called");
+		// Debug.Log (this.name + " FreezeUserInput called");
 	}
 
 
@@ -371,7 +376,7 @@ public class Mario : MonoBehaviour {
 			faceDirectionX = walkVelocityX / Mathf.Abs (walkVelocityX);
 		}
 		automaticWalkSpeedX = Mathf.Abs(walkVelocityX);
-		Debug.Log (this.name + " AutomaticWalk: speed=" + automaticWalkSpeedX.ToString());
+		// Debug.Log (this.name + " AutomaticWalk: speed=" + automaticWalkSpeedX.ToString());
 	}
 
 
@@ -415,8 +420,8 @@ public class Mario : MonoBehaviour {
 					other.gameObject.GetComponent<KoopaShell> ().isRolling ||  // non-rolling shell should do no damage
 					!bottomHit || (bottomHit && !enemy.isBeingStomped)) 
 				{
-					Debug.Log (this.name + " OnCollisionEnter2D: Damaged by " + other.gameObject.name
-						+ " from " + normal.ToString () + "; isFalling=" + isFalling); // TODO sometimes fire before stompbox reacts
+					// Debug.Log (this.name + " OnCollisionEnter2D: Damaged by " + other.gameObject.name
+						// + " from " + normal.ToString () + "; isFalling=" + isFalling); // TODO sometimes fire before stompbox reacts
 					t_LevelManager.MarioPowerDown ();
 				}
 
@@ -425,7 +430,7 @@ public class Mario : MonoBehaviour {
 			}
 		
 		} else if (other.gameObject.tag == "Goal" && isClimbingFlagPole && bottomHit) {
-			Debug.Log (this.name + ": Mario hits bottom of flag pole");
+			// Debug.Log (this.name + ": Mario hits bottom of flag pole");
 			isClimbingFlagPole = false;
 			JumpOffPole ();
 		}

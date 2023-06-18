@@ -11,6 +11,9 @@ TagManager:
   - Enemy/Piranha
   - Mario Fireball
   - Enemy/Bowser
+  - descriptionContainer
+  - levelStart
+  - canvas
   layers:
   - Default
   - TransparentFX

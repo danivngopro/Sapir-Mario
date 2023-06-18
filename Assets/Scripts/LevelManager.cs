@@ -108,7 +108,7 @@ public class LevelManager : MonoBehaviour {
 			ChangeMusic (levelMusic);
 		}
 
-		Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
+		// Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
 	}
 
 	void RetrieveGameState() {
@@ -139,7 +139,7 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		if (timeLeftInt <= 0) {
-			MarioRespawn (true);
+			// MarioRespawn (true);
 		}
 
 		if (Input.GetButtonDown ("Pause")) {
@@ -158,7 +158,7 @@ public class LevelManager : MonoBehaviour {
 	float pauseGamePrevTimeScale;
 	bool pausePrevMusicPaused;
 
-	IEnumerator PauseGameCo() {
+	public IEnumerator PauseGameCo() {
 		gamePaused = true;
 		pauseGamePrevTimeScale = Time.timeScale;
 
@@ -179,10 +179,10 @@ public class LevelManager : MonoBehaviour {
 
 		pauseSoundSource.Play();
 		yield return new WaitForSecondsRealtime (pauseSoundSource.clip.length);
-		Debug.Log (this.name + " PauseGameCo stops: records prevTimeScale=" + pauseGamePrevTimeScale.ToString());
+		// Debug.Log (this.name + " PauseGameCo stops: records prevTimeScale=" + pauseGamePrevTimeScale.ToString());
 	}
 
-	IEnumerator UnpauseGameCo() {
+	public IEnumerator UnpauseGameCo() {
 		pauseSoundSource.Play();
 		yield return new WaitForSecondsRealtime (pauseSoundSource.clip.length);
 
@@ -200,7 +200,7 @@ public class LevelManager : MonoBehaviour {
 
 		Time.timeScale = pauseGamePrevTimeScale;
 		gamePaused = false;
-		Debug.Log (this.name + " UnpauseGameCo stops: resume prevTimeScale=" + pauseGamePrevTimeScale.ToString());
+		// Debug.Log (this.name + " UnpauseGameCo stops: resume prevTimeScale=" + pauseGamePrevTimeScale.ToString());
 	}
 
 
@@ -251,6 +251,7 @@ public class LevelManager : MonoBehaviour {
 
 	/****************** Powerup / Powerdown / Die */
 	public void MarioPowerUp() {
+		Debug.Log(213);
 		soundSource.PlayOneShot (powerupSound); // should play sound regardless of size
 		if (marioSize < 2) {
 			StartCoroutine (MarioPowerUpCo ());
@@ -276,19 +277,20 @@ public class LevelManager : MonoBehaviour {
 
 	public void MarioPowerDown() {
 		if (!isPoweringDown) {
-			Debug.Log (this.name + " MarioPowerDown: called and executed");
+			// Debug.Log (this.name + " MarioPowerDown: called and executed");
 			isPoweringDown = true;
 
-			if (marioSize > 0) {
-				StartCoroutine (MarioPowerDownCo ());
-				soundSource.PlayOneShot (pipePowerdownSound);
-			} else {
-				MarioRespawn ();
-			}
-			Debug.Log (this.name + " MarioPowerDown: done executing");
-		} else {
-			Debug.Log (this.name + " MarioPowerDown: called but not executed");
-		}
+			// if (marioSize > 0) {
+			StartCoroutine (MarioPowerDownCo ());
+			soundSource.PlayOneShot (pipePowerdownSound);	
+			// } else {
+				// MarioRespawn ();
+			// }
+			// Debug.Log (this.name + " MarioPowerDown: done executing");
+		} 
+		// else {
+			// Debug.Log (this.name + " MarioPowerDown: called but not executed");
+		// }
 	}
 
 	IEnumerator MarioPowerDownCo() {
@@ -311,30 +313,33 @@ public class LevelManager : MonoBehaviour {
 
 	public void MarioRespawn(bool timeup = false) {
 		if (!isRespawning) {
+			isPoweringDown = false;
+			mario.revive();
 			isRespawning = true;
 
 			marioSize = 0;
-			lives--;
+			// lives--;
 
-			soundSource.Stop ();
-			musicSource.Stop ();
-			musicPaused = true;
+			// soundSource.Stop ();
+			// musicSource.Stop ();
+			// musicPaused = true;
 			soundSource.PlayOneShot (deadSound);
 
-			Time.timeScale = 0f;
-			mario.FreezeAndDie ();
+			// Time.timeScale = 0f;
+			// mario.FreezeAndDie ();
 
-			if (timeup) {
-				Debug.Log(this.name + " MarioRespawn: called due to timeup");
-			}
-			Debug.Log (this.name + " MarioRespawn: lives left=" + lives.ToString ());
+			// if (timeup) {
+				// Debug.Log(this.name + " MarioRespawn: called due to timeup");
+			// }
+			// Debug.Log (this.name + " MarioRespawn: lives left=" + lives.ToString ());
 
-			if (lives > 0) {
-				ReloadCurrentLevel (deadSound.length, timeup);
-			} else {
-				LoadGameOver (deadSound.length, timeup);
-				Debug.Log(this.name + " MarioRespawn: all dead");
-			}
+			// if (lives > 0) {
+			// 	ReloadCurrentLevel (deadSound.length, timeup);
+			// } else {
+			// 	LoadGameOver (deadSound.length, timeup);
+			// 	// Debug.Log(this.name + " MarioRespawn: all dead");
+			// }
+			isRespawning = false;
 		}
 	}
 		
@@ -345,34 +350,34 @@ public class LevelManager : MonoBehaviour {
 		enemy.StompedByMario ();
 		soundSource.PlayOneShot (stompSound);
 		AddScore (enemy.stompBonus, enemy.gameObject.transform.position);
-		Debug.Log (this.name + " MarioStompEnemy called on " + enemy.gameObject.name);
+		// Debug.Log (this.name + " MarioStompEnemy called on " + enemy.gameObject.name);
 	}
 
 	public void MarioStarmanTouchEnemy(Enemy enemy) {
 		enemy.TouchedByStarmanMario ();
 		soundSource.PlayOneShot (kickSound);
 		AddScore (enemy.starmanBonus, enemy.gameObject.transform.position);
-		Debug.Log (this.name + " MarioStarmanTouchEnemy called on " + enemy.gameObject.name);
+		// Debug.Log (this.name + " MarioStarmanTouchEnemy called on " + enemy.gameObject.name);
 	}
 
 	public void RollingShellTouchEnemy(Enemy enemy) {
 		enemy.TouchedByRollingShell ();
 		soundSource.PlayOneShot (kickSound);
 		AddScore (enemy.rollingShellBonus, enemy.gameObject.transform.position);
-		Debug.Log (this.name + " RollingShellTouchEnemy called on " + enemy.gameObject.name);
+		// Debug.Log (this.name + " RollingShellTouchEnemy called on " + enemy.gameObject.name);
 	}
 
 	public void BlockHitEnemy(Enemy enemy) {
 		enemy.HitBelowByBlock ();
 		AddScore (enemy.hitByBlockBonus, enemy.gameObject.transform.position);
-		Debug.Log (this.name + " BlockHitEnemy called on " + enemy.gameObject.name);
+		// Debug.Log (this.name + " BlockHitEnemy called on " + enemy.gameObject.name);
 	}
 
 	public void FireballTouchEnemy(Enemy enemy) {
 		enemy.HitByMarioFireball ();
 		soundSource.PlayOneShot (kickSound);
 		AddScore (enemy.fireballBonus, enemy.gameObject.transform.position);
-		Debug.Log (this.name + " FireballTouchEnemy called on " + enemy.gameObject.name);
+		// Debug.Log (this.name + " FireballTouchEnemy called on " + enemy.gameObject.name);
 	}
 
 	/****************** Scene loading */
@@ -382,7 +387,7 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	IEnumerator LoadSceneDelayCo(string sceneName, float delay) {
-		Debug.Log (this.name + " LoadSceneDelayCo: starts loading " + sceneName);
+		// Debug.Log (this.name + " LoadSceneDelayCo: starts loading " + sceneName);
 
 		float waited = 0;
 		while (waited < delay) {
@@ -393,7 +398,7 @@ public class LevelManager : MonoBehaviour {
 		}
 		yield return new WaitWhile (() => gamePaused);
 
-		Debug.Log (this.name + " LoadSceneDelayCo: done loading " + sceneName);
+		// Debug.Log (this.name + " LoadSceneDelayCo: done loading " + sceneName);
 
 		isRespawning = false;
 		isPoweringDown = false;
@@ -417,10 +422,10 @@ public class LevelManager : MonoBehaviour {
 		t_GameStateManager.SaveGameState ();
 		t_GameStateManager.SetSpawnPipe (spawnPipeIdx);
 		LoadSceneDelay (sceneName, delay);
-		Debug.Log (this.name + " LoadSceneCurrentLevelSetSpawnPipe: supposed to load " + sceneName 
-			+ ", spawnPipeIdx=" + spawnPipeIdx.ToString () + "; actual GSM spawnFromPoint=" 
-			+ t_GameStateManager.spawnFromPoint.ToString () + ", spawnPipeIdx=" 
-			+ t_GameStateManager.spawnPipeIdx.ToString ());
+		// Debug.Log (this.name + " LoadSceneCurrentLevelSetSpawnPipe: supposed to load " + sceneName 
+			// + ", spawnPipeIdx=" + spawnPipeIdx.ToString () + "; actual GSM spawnFromPoint=" 
+			// + t_GameStateManager.spawnFromPoint.ToString () + ", spawnPipeIdx=" 
+			// + t_GameStateManager.spawnPipeIdx.ToString ());
 	}
 
 	public void ReloadCurrentLevel(float delay = loadSceneDelay, bool timeup = false) {
@@ -469,7 +474,7 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	IEnumerator ChangeMusicCo(AudioClip clip, float delay) {
-		Debug.Log (this.name + " ChangeMusicCo: starts changing music to " + clip.name);
+		// Debug.Log (this.name + " ChangeMusicCo: starts changing music to " + clip.name);
 		musicSource.clip = clip;
 		yield return new WaitWhile (() => gamePaused);
 		yield return new WaitForSecondsRealtime (delay);
@@ -477,7 +482,7 @@ public class LevelManager : MonoBehaviour {
 		if (!isRespawning) {
 			musicSource.Play ();
 		}
-		Debug.Log (this.name + " ChangeMusicCo: done changing music to " + clip.name);
+		// Debug.Log (this.name + " ChangeMusicCo: done changing music to " + clip.name);
 	}
 
 	public void PauseMusicPlaySound(AudioClip clip, bool resumeMusic) {
@@ -489,7 +494,7 @@ public class LevelManager : MonoBehaviour {
 		if (musicSource.clip) {
 			musicClipName = musicSource.clip.name;
 		}
-		Debug.Log (this.name + " PausemusicPlaySoundCo: starts pausing music " + musicClipName + " to play sound " + clip.name);
+		// Debug.Log (this.name + " PausemusicPlaySoundCo: starts pausing music " + musicClipName + " to play sound " + clip.name);
 
 		musicPaused = true;
 		musicSource.Pause ();
@@ -502,11 +507,11 @@ public class LevelManager : MonoBehaviour {
 			if (musicSource.clip) {
 				musicClipName = musicSource.clip.name;
 			}
-			Debug.Log (this.name + " PausemusicPlaySoundCo: resume playing music " + musicClipName);
+			// Debug.Log (this.name + " PausemusicPlaySoundCo: resume playing music " + musicClipName);
 		}
 		musicPaused = false;
 
-		Debug.Log (this.name + " PausemusicPlaySoundCo: done pausing music to play sound " + clip.name);
+		// Debug.Log (this.name + " PausemusicPlaySoundCo: done pausing music to play sound " + clip.name);
 	}
 
 	/****************** Game state */
@@ -561,9 +566,9 @@ public class LevelManager : MonoBehaviour {
 	public Vector3 FindSpawnPosition() {
 		Vector3 spawnPosition;
 		GameStateManager t_GameStateManager = FindObjectOfType<GameStateManager>();
-		Debug.Log (this.name + " FindSpawnPosition: GSM spawnFromPoint=" + t_GameStateManager.spawnFromPoint.ToString()
-			+ " spawnPipeIdx= " + t_GameStateManager.spawnPipeIdx.ToString() 
-			+ " spawnPointIdx=" + t_GameStateManager.spawnPointIdx.ToString());
+		// Debug.Log (this.name + " FindSpawnPosition: GSM spawnFromPoint=" + t_GameStateManager.spawnFromPoint.ToString()
+			// + " spawnPipeIdx= " + t_GameStateManager.spawnPipeIdx.ToString() 
+			// + " spawnPointIdx=" + t_GameStateManager.spawnPointIdx.ToString());
 		if (t_GameStateManager.spawnFromPoint) {
 			spawnPosition = GameObject.Find ("Spawn Points").transform.GetChild (t_GameStateManager.spawnPointIdx).transform.position;
 		} else {
