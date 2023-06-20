@@ -11,6 +11,9 @@ scopes = {
 	"last_search.310DEAF1" = "planes"
 	"OpenInspectorPreview.310DEAF1" = "0"
 	"currentGroup.310DEAF1" = "all"
+	"last_search.D379D912" = "Right2Left"
+	"OpenInspectorPreview.D379D912" = "0"
+	"currentGroup.D379D912" = "all"
 }
 providers = {
 	performance = {
@@ -62,6 +65,8 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"Right2Left"
+	""
 ]
 searchItemFavorites = [
 ]
