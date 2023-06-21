@@ -24,20 +24,20 @@ public class GameOverScreen : MonoBehaviour {
 		t_GameStateManager = FindObjectOfType<GameStateManager> ();
 		string worldName = t_GameStateManager.sceneToLoad;
 
-		WorldTextHUD.text = Regex.Split (worldName, "World ")[1];
+		// WorldTextHUD.text = Regex.Split (worldName, "World ")[1];
 		ScoreTextHUD.text = t_GameStateManager.scores.ToString ("D6");
 		CoinTextHUD.text = "x" + t_GameStateManager.coins.ToString ("D2");
 
 		bool timeup = t_GameStateManager.timeup;
 		if (!timeup) {
-			MessageText.text = "GAME OVER";
+			// MessageText.text = "GAME OVER";
 		} else {
 			StartCoroutine (ChangeMessageCo ());
 		}
 
 		gameOverMusicSource.volume = PlayerPrefs.GetFloat ("musicVolume");
 		gameOverMusicSource.Play ();
-		LoadMainMenu (gameOverMusicSource.clip.length);
+		LoadMainMenu (10);
 
 		// Debug.Log (this.name + " Start: current scene is " + SceneManager.GetActiveScene ().name);
 	}
