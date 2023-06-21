@@ -178,13 +178,13 @@ public class LevelManager : MonoBehaviour {
 		}
 
 		pauseSoundSource.Play();
-		yield return new WaitForSecondsRealtime (pauseSoundSource.clip.length);
+		yield return new WaitForSecondsRealtime (0);
 		// Debug.Log (this.name + " PauseGameCo stops: records prevTimeScale=" + pauseGamePrevTimeScale.ToString());
 	}
 
 	public IEnumerator UnpauseGameCo() {
 		pauseSoundSource.Play();
-		yield return new WaitForSecondsRealtime (pauseSoundSource.clip.length);
+		yield return new WaitForSecondsRealtime (0);
 
 		musicPaused = pausePrevMusicPaused;
 		if (!musicPaused) {
